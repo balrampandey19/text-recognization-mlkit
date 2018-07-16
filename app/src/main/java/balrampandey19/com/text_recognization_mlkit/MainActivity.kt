@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.provider.MediaStore
 import android.content.Intent
-import android.R.attr.data
 import android.app.Activity
 import android.graphics.Bitmap
 
