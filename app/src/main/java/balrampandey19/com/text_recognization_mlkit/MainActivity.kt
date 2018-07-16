@@ -7,6 +7,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.provider.MediaStore
 import android.content.Intent
+import android.R.attr.data
+import android.app.Activity
+import android.graphics.Bitmap
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,5 +31,13 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(photoCaptureIntent, requestCode)
 
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (this.requestCode === requestCode && resultCode === Activity.RESULT_OK) {
+            val bitmap = data!!.getExtras().get("data") as Bitmap
+//            image.setImageBitmap(bitmap)
+        }
     }
 }
