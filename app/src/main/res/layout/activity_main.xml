@@ -16,6 +16,8 @@
             android:layout_height="wrap_content">
 
             <balrampandey19.com.text_recognization_mlkit.GraphicOverlay
+                android:id="@+id/graphicOverlay"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
