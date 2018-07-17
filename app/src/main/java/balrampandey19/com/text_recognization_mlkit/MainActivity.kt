@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var image: ImageView
     lateinit var onCloud: Button
     lateinit var onDevice: Button
+    lateinit var mGraphicOverlay: GraphicOverlay
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
