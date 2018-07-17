@@ -9,6 +9,11 @@ import android.provider.MediaStore
 import android.content.Intent
 import android.app.Activity
 import android.graphics.Bitmap
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.text.FirebaseVisionText
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,5 +46,22 @@ class MainActivity : AppCompatActivity() {
             val bitmap = data!!.getExtras().get("data") as Bitmap
             image.setImageBitmap(bitmap)
         }
+    }
+
+    private fun runTextRecognition(bitmap: Bitmap) {
+        val image = FirebaseVisionImage.fromBitmap(bitmap)
+        val detector = FirebaseVision.getInstance()
+                .visionTextDetector
+        detector.detectInImage(image)
+                .addOnSuccessListener { texts ->
+                    processTextRecognitionResult(texts)
+                }
+                .addOnFailureListener(
+                        object : OnFailureListener {
+                            override fun onFailure(e: Exception) {
+                                // Task failed with an exception
+                                e.printStackTrace()
+                            }
+                        })
     }
 }
