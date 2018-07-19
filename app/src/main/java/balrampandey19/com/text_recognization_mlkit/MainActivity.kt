@@ -93,13 +93,12 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun runCloudTextRecognition() {
+    private fun runCloudTextRecognition(bitmap: Bitmap) {
         val options = FirebaseVisionCloudDetectorOptions.Builder()
                 .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
                 .setMaxResults(15)
                 .build()
-        mCloudButton.setEnabled(false)
-        val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
+        val image = FirebaseVisionImage.fromBitmap(bitmap)
         val detector = FirebaseVision.getInstance()
                 .getVisionCloudDocumentTextDetector(options)
         detector.detectInImage(image)
