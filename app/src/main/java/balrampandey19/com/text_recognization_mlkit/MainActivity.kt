@@ -13,6 +13,8 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions
+import com.google.firebase.ml.vision.cloud.text.FirebaseVisionCloudText
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 
@@ -89,5 +91,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun runCloudTextRecognition() {
+        val options = FirebaseVisionCloudDetectorOptions.Builder()
+                .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
+                .setMaxResults(15)
+                .build()
+        mCloudButton.setEnabled(false)
+        val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
+        val detector = FirebaseVision.getInstance()
+                .getVisionCloudDocumentTextDetector(options)
+        detector.detectInImage(image)
+                .addOnSuccessListener { texts ->
+                    mCloudButton.setEnabled(true)
+                    processCloudTextRecognitionResult(texts)
+                }
+                .addOnFailureListener(
+                        object : OnFailureListener {
+                            override fun onFailure(e: Exception) {
+                                // Task failed with an exception
+                                mCloudButton.setEnabled(true)
+                                e.printStackTrace()
+                            }
+                        })
     }
 }
