@@ -103,14 +103,11 @@ class MainActivity : AppCompatActivity() {
                 .getVisionCloudDocumentTextDetector(options)
         detector.detectInImage(image)
                 .addOnSuccessListener { texts ->
-                    mCloudButton.setEnabled(true)
                     processCloudTextRecognitionResult(texts)
                 }
                 .addOnFailureListener(
                         object : OnFailureListener {
                             override fun onFailure(e: Exception) {
-                                // Task failed with an exception
-                                mCloudButton.setEnabled(true)
                                 e.printStackTrace()
                             }
                         })
